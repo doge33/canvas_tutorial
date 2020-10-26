@@ -1,0 +1,54 @@
+<canvas class="myCanvas">
+  <p>Add suitable fallback here.</p>
+</canvas>
+
+<script>
+  const canvas = document.querySelector('.myCanvas');
+  const width = canvas.width = window.innerWidth;
+  const height = canvas.height = window.innerHeight;
+
+  //contains a CanvasRenderingContext2D object, 
+  //all drawing operations on the canvas will involve manipulating this object.
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = 'rgb(100, 100, 150)'; 
+  ctx.fillRect(0, 0, width, height);
+ 
+  //draw equilateral triangle
+  ctx.fillStyle = 'rgb(255, 0, 0';
+  ctx.beginPath(); //start at (0,0)
+  ctx.moveTo(50, 50); // simply jump to new position; begin drawing here
+  //draw your path
+  ctx.lineTo(150, 50); //a line to here
+  let triHeight = 50 * Math.tan(degToRad(60)); //calculate the height of the equilateral triangle
+  ctx.lineTo(100, 50+triHeight); //draw the longest side
+  ctx.lineTo(50, 50);
+  ctx.fill();
+
+  //draw circle
+  ctx.fillStyle = 'rgb(0, 0, 255)';
+  ctx.beginPath();
+  ctx.arc(150, 106, 50, degToRad(0), degToRad(360), false);
+  //parameters: X, Y, radius, start angle, end angle, draw it clockwise
+  ctx.fill();
+  
+  //draw pacman-style circle
+  ctx.fillStyle = 'yellow';
+  ctx.beginPath();
+  ctx.arc(200, 106, 50, degToRad(-45), degToRad(45), true); //draw from -45 degree counterclockwise to 45 degree
+  ctx.lineTo(200, 106); //close the circle by drawing a line back to the center
+  ctx.fill();
+
+
+  //this helper converts degree to radians for angles
+  function degToRad(degrees) {
+  return degrees * Math.PI / 180;
+};
+</script>
+
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+</style>

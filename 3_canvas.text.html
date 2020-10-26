@@ -1,0 +1,41 @@
+<canvas class="myCanvas">
+  <p>Add suitable fallback here.</p>
+</canvas>
+
+<script>
+  const canvas = document.querySelector('.myCanvas');
+  const width = canvas.width = window.innerWidth;
+  const height = canvas.height = window.innerHeight;
+
+  //contains a CanvasRenderingContext2D object, 
+  //all drawing operations on the canvas will involve manipulating this object.
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = 'rgb(100, 100, 150)'; 
+  ctx.fillRect(0, 0, width, height);
+  //the first two parameters are the coordinates of the rectangle's top left hand corner; 
+  //the last two are the width and height you want the rectangle drawn at 
+
+
+  //draw text but only outline
+  ctx.strokeStyle = "white"; 
+  ctx.lineWidth = 1;
+  ctx.font = "36px arial";
+  ctx.strokeText("Canvas text", 50, 50);
+  //draw filled text
+  ctx.fillStyle="red";
+  ctx.font = "48px, georgia";
+  ctx.fillText("Canvas text", 50, 150);
+
+  //this helper converts degree to radians for angles
+  function degToRad(degrees) {
+  return degrees * Math.PI / 180;
+};
+</script>
+
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+</style>

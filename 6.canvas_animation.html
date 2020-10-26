@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Canvas</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas class="myCanvas">
+      <p>Add suitable fallback here.</p>
+    </canvas>
+
+    <script>
+
+      const canvas = document.querySelector('.myCanvas');
+      const width = canvas.width = window.innerWidth;
+      const height = canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = 'rgb(0,0,0)';
+      ctx.fillRect(0,0,width,height);
+
+      ctx.translate(width/2, height/2); //put origin at the center of the canvas
+      
+      let image = new Image();
+      image.src = 'walk-right.png';
+      image.onload = draw; //onload event handler causes the draw() function to fire
+
+      let sprite = 0; //keep track of the position of the sprite is to be drawn on the screen 
+      let posX = 0; //the sprite number we want to display
+
+      function draw() {
+        //clears the canvas to prepare for drawing each frame
+        //origin is X=width/2, Y=height/2 ==> so make the center of the canvas the new origin (0,0)
+        ctx.fillRect(-(width/2), -(height/2), width, height);
+        //draw
+        ctx.drawImage(image, (sprite*102), 0, 102, 148, 0+posX, -74, 102, 148);
+        //0+posX is the topLeftCorner X of the box we draw into. posX is to be altered
+        // -74 is???
+
+        //alter the sprite value after each draw
+        //only update the sprite on every 13th frame(or roughly 5fps) 
+        //(requestAnimationFrame() calls us at up to 60fps if possible).
+        if (posX % 13 === 0) {
+          //if sprite is at the end 
+          if (sprite === 5) {
+            //make it start again
+            sprite = 0;
+          } else {
+            //if we are not showing the last sprite at 5th, just keep incrementing
+            sprite++;
+          }
+        }
+
+        //change the posX value on each frame
+         //if character has walked off the right edge of screen
+        if(posX > width/2) {
+         //put him back to the just before the left edge of the screen
+          newStartPos = -((width/2) + 102);
+          posX = Math.ceil(newStartPos);//the X of the left side of the sprite should not exceed the X-102 of the left edge of the screen
+          console.log(posX);
+
+        } else {
+          //otherwise, keep walking towards the left
+          posX += 2;
+        }
+
+        window.requestAnimationFrame(draw); //to schedule drawing of the next frame of the animation.
+      };
+
+
+    </script>
+  </body>
+</html>
